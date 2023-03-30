@@ -1,0 +1,7 @@
+.container {
+    height: 70vh;
+    width: 100vw;
+    font-size: 1em;
+    background-color: aliceblue;
+    font-family: Helvetica, Arial, sans-serif;
+}
