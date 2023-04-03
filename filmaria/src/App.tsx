@@ -8,6 +8,7 @@ import Containner from './Components/Layouts/Container';
 
 // Pages
 import Home from './Components/Pages/Home';
+import Filme from './Components/Pages/Filme';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Header />
         <Containner>
           <Routes>
+              <Route path='/filme/:id' element={<Filme /> } />
               <Route path='/' element={<Home />} />
           </Routes>
         </Containner>

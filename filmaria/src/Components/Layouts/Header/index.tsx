@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 // CSS
 import styles from './Header.module.css';
@@ -7,8 +8,7 @@ const Header = () => {
     return (
         <header>
             <nav className={styles.navbar}>
-                <a href="/" className={styles.logo}>Prime Flix</a>
-                <a href="/my-filmes" className={styles.menu}>Meus filmes</a>
+                <Link to="/" className={styles.logo}>Prime Flix</Link>
             </nav>
         </header>
     );

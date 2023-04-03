@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
 
 // CSS
 import styles from "./Home.module.css";
@@ -20,6 +21,8 @@ const Home = () => {
 
     },[])
 
+    // https://api.themoviedb.org/3/movie/${filme.id}?api_key=${process.env.REACT_APP_API_KEY}&language=pt-br
+
     return(
         <div>
             {filmes && (
@@ -28,7 +31,7 @@ const Home = () => {
                         <div key={filme.id} className={styles.grid}>
                             <h1>{filme.title}</h1>
                             <img src={`https://image.tmdb.org/t/p/original/${filme.poster_path}`} alt={filme.title} />
-                            <button>Acessar</button>
+                            <Link to={`filme/${filme.id}`}>Acessar</Link>
                         </div>
                     ))}
                 </section>
