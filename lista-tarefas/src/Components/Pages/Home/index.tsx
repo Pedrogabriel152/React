@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+// Firebase
+import { auth } from '../../../firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 // CSS
 import "./Home.css";
@@ -7,16 +11,24 @@ import "./Home.css";
 const Home = () => {
   const [user, setUser] = useState<any>({});
 
+  const navigate = useNavigate();
+
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUser({...user, [e.target.name]: e.target.value})
   }
 
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if(!user.email || !user.password) {
-      alert("Preença todos os campos")
+      alert("Preença todos os campos");
     }
+
+    await signInWithEmailAndPassword(auth, user.email, user.password)
+    .then((value: any) => {
+      navigate('admin', { replace: true })
+    })
+    .catch((erro: any) => console.log("Erro ao fazer login"))
   }
 
   return (
@@ -29,16 +41,15 @@ const Home = () => {
           type="email" 
           placeholder='Digite seu e-mail...'
           name='email'
-          value={user.email}
+          value={user.email? user.email : ''}
           onChange={handleOnChange}
         />
 
         <input 
-          autoComplete='false'
           type="password" 
           placeholder='Digite uma senha'
           name='password'
-          value={user.password}
+          value={user.password? user.password : ''}
           onChange={handleOnChange}
         />
 
