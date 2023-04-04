@@ -10,7 +10,10 @@ import { doc,
         deleteDoc,
         onSnapshot } from "firebase/firestore";
 
-import { createUserWithEmailAndPassword,  } from "firebase/auth"
+import { createUserWithEmailAndPassword, 
+          signInWithEmailAndPassword, 
+          signOut,
+          onAuthStateChanged } from "firebase/auth"
 import './app.css';
 
 function App() {
@@ -21,6 +24,8 @@ function App() {
   const [idpost, setIdPost] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [user, setUser] = useState<boolean>(false);
+  const [userDetail, setUserDetail] = useState<any>({});
 
   useEffect(() => {
 
@@ -39,6 +44,24 @@ function App() {
     })
 
   }, [posts])
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user: any) => {
+      if(!user) {
+        setUser(false);
+        setUserDetail({});
+        return
+      }
+
+      setUserDetail({
+        uid: user.uid,
+        email: user.email
+      });
+
+      setUser(true);
+
+    })
+  }, [])
 
   const handleAdd = async () => {
     // await setDoc(doc(db, 'posts', "12345"), {
@@ -140,9 +163,45 @@ function App() {
     .catch((error: any) => console.log("Deu erro"))
   }
 
+  const handleLogin = async () => {
+    await signInWithEmailAndPassword(auth, email, password)
+    .then((value:any) => {
+      console.log("Logado com sucesso");
+
+      setUserDetail({
+        uid: value.user.uid,
+        email: value.user.email
+      });
+
+      setUser(true);
+
+      setEmail('');
+      setPassword('');
+
+    })
+    .catch((erro: any) => console.log("Deu erro"))
+  }
+
+  const handleLogout = async () => {
+    await signOut(auth)
+    setUser(false)
+    setUserDetail({})
+  }
+
   return (
     <div className="App">
       <h1>ReactJS + Firebase</h1>
+
+      {user && (
+        <div>
+          <strong>Seja bem-vindo(a) (Você está logado!)</strong><br />
+          <span>ID: {userDetail.uid} - E-mail: {userDetail.email}</span><br />
+
+          <button onClick={handleLogout}>Sair</button>
+          <br /><hr /> <br />
+        </div>
+      )}
+
       <div className="container">
         <h2>Usuários</h2>
         <label htmlFor="email">E-mail</label>
@@ -163,6 +222,7 @@ function App() {
         />
 
         <button onClick={handleRegister}>Cadastrar</button>
+        <button onClick={handleLogin}>Fazer Login</button>
 
         <br /> <br />
         
