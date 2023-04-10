@@ -116,7 +116,9 @@ const AuthProvider = ({children}: any) => {
                 signUp,
                 loadingAuth,
                 loading,
-                logout
+                logout,
+                storageUser,
+                setUser
             }}
         >
             {children}
