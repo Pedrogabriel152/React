@@ -4,10 +4,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 // Routes 
 import RoutesApp from './routes';
 
+// Provaider
+import AuthProvider from './Contexts/auth';
+
 function App() {
   return (
     <Router>
-      <RoutesApp />
+      <AuthProvider>
+        <RoutesApp />
+      </AuthProvider>
     </Router>
   );
 }

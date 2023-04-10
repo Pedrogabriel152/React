@@ -1,8 +1,11 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useContext, FormEvent } from "react";
 import { Link } from "react-router-dom";
 
 // CSS 
 import "./SignIn.css";
+
+// Context
+import { AuthContext } from "../../../Contexts/auth";
 
 // Logo
 import logo from "../../../assets/logo.png";
@@ -11,8 +14,26 @@ import Input from "../../Form/Input";
 const SignIn = () =>{
   const [user, setUser] = useState<any>({});
 
+  const { signIn } = useContext<any>(AuthContext);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({...user, [e.target.name]: e.target.value});
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if(!user.email) {
+      alert("O e-mail é obrigatório");
+      return;
+    }
+
+    if(!user.password) {
+      alert("A senha é obrigatória");
+      return;
+    }
+
+    signIn(user.email, user.password);
   }
 
   return(
@@ -22,7 +43,7 @@ const SignIn = () =>{
           <img src={logo} alt="Logo do sistema" />
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <h1>Entrar</h1>
           <Input 
             type='email'
