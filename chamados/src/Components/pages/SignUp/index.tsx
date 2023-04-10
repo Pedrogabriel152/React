@@ -1,11 +1,6 @@
 import React, { FormEvent, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
-// Firebase
-import { auth, db } from "../../../Services/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-
 // CSS 
 import "../SignIn/SignIn.css";
 
@@ -19,14 +14,13 @@ import Input from "../../Form/Input";
 const SignUp = () =>{
 
   const [user, setUser] = useState<any>({});
-  const [loadingAuth, setLoadingAuth] = useState<boolean>(false);
-  const { signUp } = useContext<any>(AuthContext);
+  const { signUp, loadingAuth } = useContext<any>(AuthContext);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({...user, [e.target.name]: e.target.value});
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!user.name) {
@@ -44,7 +38,7 @@ const SignUp = () =>{
       return;
     }
 
-    signUp(user.name, user.email, user.password)
+    await signUp(user.name, user.email, user.password)
 
   }
 
@@ -79,7 +73,12 @@ const SignUp = () =>{
             handleOnChange={handleOnChange}
           />
 
-          <button type="submit">Acessar</button>
+          <button type="submit">
+            {loadingAuth
+              ? 'Carregando...'
+              : 'Cadastrar'
+            }
+          </button>
         </form>
 
         <Link to={'/'}>Faça o login</Link>

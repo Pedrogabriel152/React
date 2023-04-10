@@ -14,13 +14,13 @@ import Input from "../../Form/Input";
 const SignIn = () =>{
   const [user, setUser] = useState<any>({});
 
-  const { signIn } = useContext<any>(AuthContext);
+  const { signIn, loadingAuth } = useContext<any>(AuthContext);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({...user, [e.target.name]: e.target.value});
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!user.email) {
@@ -33,7 +33,8 @@ const SignIn = () =>{
       return;
     }
 
-    signIn(user.email, user.password);
+    await signIn(user.email, user.password);
+
   }
 
   return(
@@ -60,7 +61,12 @@ const SignIn = () =>{
             handleOnChange={handleOnChange}
           />
 
-          <button type="submit">Acessar</button>
+          <button type="submit">
+            {loadingAuth 
+              ? 'Carregando...'
+              : 'Acessar'
+            }
+          </button>
         </form>
 
         <Link to={'/register'}>Criar uma conta</Link>
