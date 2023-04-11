@@ -11,10 +11,10 @@ import avatarimg from '../../../assets/avatar.png';
 import { AuthContext } from "../../../Contexts/auth";
 
 // Icons
-import { FiHome, FiUser, FiSettings } from 'react-icons/fi';
+import { FiHome, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
 
 const Header = () => {
-    const { user }: any = useContext(AuthContext)
+    const { user, logout }: any = useContext(AuthContext)
 
     return(
         <div className="sidebar">
@@ -32,6 +32,12 @@ const Header = () => {
                 <FiSettings color="#FFF" size={24} />
                 Perfil
             </Link>
+
+            <Link to={''} onClick={logout}>
+                <FiLogOut color="#FFF" size={24} />
+                Sair
+            </Link>
+            
         </div>
     );
 }

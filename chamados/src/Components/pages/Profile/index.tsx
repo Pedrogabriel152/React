@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 // Layouts
 import Header from "../../Layouts/Header";
 import Title from "../../Layouts/Title";
+import Input from "../../Form/Input";
 
 // Icons
 import { FiSettings, FiUpload } from "react-icons/fi";
@@ -19,11 +20,10 @@ import avatar from '../../../assets/avatar.png';
 
 // Context
 import { AuthContext } from "../../../Contexts/auth";
-import Input from "../../Form/Input";
 
 // Firebase
 import { doc, updateDoc } from "firebase/firestore";
-import { auth, storage, db } from "../../../Services/firebase";
+import { storage, db } from "../../../Services/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Profile = () => {

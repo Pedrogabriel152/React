@@ -5,6 +5,7 @@ import SignUp from '../Components/pages/SignUp';
 import Dashboard from '../Components/pages/Dashboard';
 import Private from './private';
 import Profile from '../Components/pages/Profile';
+import Customers from '../Components/pages/Customers';
 
 const RoutesApp = () => {
   return(
@@ -13,6 +14,7 @@ const RoutesApp = () => {
       <Route path="/register" element={ <SignUp/> } />
       <Route path='/dashboard' element={ <Private><Dashboard/></Private> } />
       <Route path='/profile' element={ <Private><Profile/></Private> } />
+      <Route path='/customers' element={ <Private><Customers/></Private> } />
     </Routes>
   )
 }

@@ -73,4 +73,8 @@
         display: none;
     }
 
+    .sidebar svg {
+        display: none;
+    }
+
 }
