@@ -44,7 +44,7 @@ const AuthProvider = ({children}: any) => {
                     uid: uid,
                     name: docSnap.data().name,
                     email: value.user.email,
-                    avatarUrlÇ: docSnap.data().avatarUrl
+                    avatarUrl: docSnap.data().avatarUrl
                 };
 
                 setUser(data);
@@ -80,7 +80,7 @@ const AuthProvider = ({children}: any) => {
                     uid: uid,
                     name: name,
                     email: value.user.email,
-                    avatarUrlÇ: null
+                    avatarUrl: null
                 };
 
                 setUser(data);
