@@ -6,6 +6,7 @@ import Dashboard from '../Components/pages/Dashboard';
 import Private from './private';
 import Profile from '../Components/pages/Profile';
 import Customers from '../Components/pages/Customers';
+import New from '../Components/pages/New/new';
 
 const RoutesApp = () => {
   return(
@@ -15,6 +16,7 @@ const RoutesApp = () => {
       <Route path='/dashboard' element={ <Private><Dashboard/></Private> } />
       <Route path='/profile' element={ <Private><Profile/></Private> } />
       <Route path='/customers' element={ <Private><Customers/></Private> } />
+      <Route path='/new' element={ <Private><New/></Private> } />
     </Routes>
   )
 }
