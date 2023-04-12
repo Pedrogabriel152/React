@@ -6,7 +6,7 @@ import Dashboard from '../Components/pages/Dashboard';
 import Private from './private';
 import Profile from '../Components/pages/Profile';
 import Customers from '../Components/pages/Customers';
-import New from '../Components/pages/New/new';
+import New from '../Components/pages/New';
 
 const RoutesApp = () => {
   return(
