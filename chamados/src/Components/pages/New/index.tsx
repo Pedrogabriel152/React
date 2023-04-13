@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, FormEvent } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 // CSS
 import './New.css';
@@ -16,7 +17,7 @@ import { AuthContext } from "../../../Contexts/auth";
 
 // Firebase
 import { db } from "../../../Services/firebase";
-import { doc, collection, getDoc, getDocs, addDoc } from "firebase/firestore";
+import { doc, collection, getDoc, getDocs, addDoc, updateDoc } from "firebase/firestore";
 
 // Toastify
 import { toast } from "react-toastify";
@@ -27,9 +28,13 @@ const New = () => {
     const [chamado, setChamado] = useState<any>({});
     const [custumerSelected, setCustomerSelected] = useState<any>(0);
     const { user } = useContext<any>(AuthContext);
+    const { id } = useParams();
     const listRef = collection(db, "customers");
+    const navigate = useNavigate();
+    const [idCustomer, setIdCustomer] = useState<boolean>(false);
 
     useEffect(() => {
+        chamado.status = 'Aberto'
         const querySnapshot = getDocs(listRef)
         .then((res: any) => {
             let lista: Array<any> = [];
@@ -52,6 +57,10 @@ const New = () => {
 
             setCustomers(lista);
             setLoadCustumers(false);
+
+            if(id) {
+                loadId(lista);
+            }
         })
         .catch((error : any) => {
             console.log("ERROR AO BUSCAR OS CLIENTES", error);
@@ -61,7 +70,29 @@ const New = () => {
                 nomeFanatsia: 'FREELA'
             }]);
         })
-    }, [])
+    }, [id]);
+
+    const loadId = async (lista: any) => {
+        if(id) {
+            const docRef = doc(db, 'chamados', id);
+            await getDoc(docRef)
+            .then((snapshot: any) => {
+                setChamado({
+                    assunto: snapshot.data().assunto,
+                    status: snapshot.data().status,
+                    complemento: snapshot.data().complemento,
+                });
+
+                let index = lista.findIndex((item: any) => item.id === snapshot.data().clientId);
+                setCustomerSelected(index);
+                setIdCustomer(true);
+            })
+            .catch((error: any) => {
+                console.log(error);
+                setIdCustomer(false);
+            })
+        }
+    }
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChamado({...chamado,[e.target.name]: e.target.value});
@@ -74,11 +105,35 @@ const New = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if(idCustomer) {
+            // Atualizando chamado
+            const docRef = doc(db, 'chamados', id!);
+            await updateDoc(docRef, {
+                client: customers[custumerSelected].nomeFantasia,
+                clientId: customers[custumerSelected].id,
+                assunto: chamado.assunto? chamado.assunto : 'Suporte',
+                complemento: chamado.complemento,
+                status: chamado.status,
+                uderId: user.uid
+            })
+
+            .then(() => {
+                toast.info('Chamado atualizado com sucesso');
+                setCustomerSelected(0);
+                setChamado({});
+                navigate('/dashboard');
+            })
+            .catch(() => toast.error('Erro ao atualizar este chamado, tente novamente mais tarde'))
+
+            return;
+        }
+
+        // Registrar um chamado
         await addDoc(collection(db, "chamados"), {
             created: new Date(),
             client: customers[custumerSelected].nomeFantasia,
             clientId: customers[custumerSelected].id,
-            assunto: chamado.assunto? chamado.assunto : 'Aberto',
+            assunto: chamado.assunto? chamado.assunto : 'Suporte',
             complemento: chamado.complemento,
             status: chamado.status,
             uderId: user.uid
@@ -86,6 +141,7 @@ const New = () => {
         .then(() => {
             toast.success('Chamado registrado');
             setChamado({});
+            navigate('/dashboard')
             setCustomerSelected(0);
         })
         .catch((error: any) =>{
@@ -99,7 +155,7 @@ const New = () => {
         <div>
             <Header />
             <div className="content">
-                <Title name="Novo chamado">
+                <Title name={id? 'Editando chamdo' : "Novo chamado"}>
                     <FiPlusCircle size={25}/>
                 </Title>
 
@@ -171,7 +227,7 @@ const New = () => {
                             onChange={handleOnChangeTextArea}
                         />
 
-                        <button type="submit">Registrar</button>
+                        <button type="submit">{idCustomer ? 'Salvar' : 'Registrar'}</button>
                     </form>
                 </div>
             </div>
