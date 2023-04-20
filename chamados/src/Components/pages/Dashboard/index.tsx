@@ -124,7 +124,7 @@ const Dashboard = () => {
                             <div className="container dashboard">
                                 <span>Nenhum chamado encontrado...</span>
 
-                                <Link to={'/new'} className="new">
+                                <Link to={'/new'} className="new" data-test='novo-chamado'>
                                     <FiPlus color="#FFF" size={25} />
                                     Novo chamado
                                 </Link>
@@ -132,7 +132,7 @@ const Dashboard = () => {
                         )
                         : (
                             <>
-                                <Link to={'/new'} className="new">
+                                <Link to={'/new'} className="new" data-test='novo-chamado-dados'>
                                     <FiPlus color="#FFF" size={25} />
                                     Novo chamado
                                 </Link>

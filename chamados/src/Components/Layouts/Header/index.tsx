@@ -33,7 +33,7 @@ const Header = () => {
                 Perfil
             </Link>
 
-            <Link to={''} onClick={logout}>
+            <Link to={''} onClick={logout} data-test='logout'>
                 <FiLogOut color="#FFF" size={24} />
                 Sair
             </Link>

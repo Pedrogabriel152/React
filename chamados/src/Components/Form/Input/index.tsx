@@ -7,9 +7,10 @@ interface Props {
     value: any
     handleOnChange(e: React.ChangeEvent<HTMLInputElement>): void
     checked?: boolean
+    data_teste?: string
 }
 
-const Input = ({type, name, placeholder, value, handleOnChange, checked}: Props) => {
+const Input = ({type, name, placeholder, value, handleOnChange, checked, data_teste}: Props) => {
     return (
         <input 
             type={type}
@@ -18,6 +19,7 @@ const Input = ({type, name, placeholder, value, handleOnChange, checked}: Props)
             name={name}
             onChange={handleOnChange}
             checked= {checked? checked : false}
+            data-test={data_teste? data_teste : ''}
         />
     );
 }

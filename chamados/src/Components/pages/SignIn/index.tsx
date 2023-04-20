@@ -52,6 +52,7 @@ const SignIn = () =>{
             value={user.email? user.email : ''}
             name={'email'}
             handleOnChange={handleOnChange}
+            data_teste='input-name'
           />
           <Input 
             type='password'
@@ -59,9 +60,10 @@ const SignIn = () =>{
             value={user.password? user.password : ''}
             name={'password'}
             handleOnChange={handleOnChange}
+            data_teste='input-password'
           />
 
-          <button type="submit">
+          <button type="submit" data-test='button-submit'>
             {loadingAuth 
               ? 'Carregando...'
               : 'Acessar'

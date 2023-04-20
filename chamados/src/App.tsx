@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <ToastContainer autoClose={3000} />
+        <ToastContainer autoClose={3000} test-data='toast'/>
         <RoutesApp />
       </AuthProvider>
     </Router>

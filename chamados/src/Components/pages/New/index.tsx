@@ -166,7 +166,7 @@ const New = () => {
                             {loadCustmuers 
                                 ? <input type="text" disabled={true} value={"Carregando..."} />
                                 : (
-                                    <select name="client" id="client" value={custumerSelected} onChange={handleChengeSelect}> 
+                                    <select name="client" id="client" value={custumerSelected} onChange={handleChengeSelect} data-test='client'> 
                                         {customers.map((item: any, index: any) => (
                                             <option key={index} value={index}>{item.nomeFantasia}</option>
                                         ))}
@@ -178,6 +178,7 @@ const New = () => {
                         <select 
                             name="assunto" 
                             id="assunto" 
+                            data-test='assunto'
                             value={chamado.assunto} 
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setChamado({...chamado,[e.target.name]: e.target.value})}
                         >
@@ -195,6 +196,7 @@ const New = () => {
                                 placeholder=""
                                 handleOnChange={handleOnChange}
                                 checked={chamado.status === 'Aberto'}
+                                data_teste="aberto"
                             />
                             <span>Em Aberto</span>
 
@@ -203,6 +205,7 @@ const New = () => {
                                 name="status"
                                 value={"Progresso"}
                                 placeholder=""
+                                data_teste="progresso"
                                 handleOnChange={handleOnChange}
                                 checked={chamado.status === 'Progresso'}
                             />
@@ -213,6 +216,7 @@ const New = () => {
                                 name="status"
                                 value={"Atendido"}
                                 placeholder=""
+                                data_teste="atendido"
                                 handleOnChange={handleOnChange}
                                 checked={chamado.status === 'Atendido'}
                             />
@@ -224,10 +228,11 @@ const New = () => {
                             name="complemento"
                             placeholder="Descreva seu problema"
                             value={chamado.complemento}
+                            data-teste="complemento"
                             onChange={handleOnChangeTextArea}
                         />
 
-                        <button type="submit">{idCustomer ? 'Salvar' : 'Registrar'}</button>
+                        <button type="submit" data-test='button-submit'>{idCustomer ? 'Salvar' : 'Registrar'}</button>
                     </form>
                 </div>
             </div>
