@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Pages
@@ -10,7 +9,7 @@ const RoutesApp = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={ <Main />} />
-                <Route path="/repositorio" element={ <Repositorio />} />
+                <Route path="/repositorio/:repositorio" element={ <Repositorio />} />
             </Routes>
         </BrowserRouter>
     );
