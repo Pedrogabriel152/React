@@ -1,8 +1,13 @@
 import React from "react";
 
+import { Title } from './styles';
+
 const Main = () => {
     return(
-        <h1>Ola Main</h1>
+        <Title>
+            Ola Main
+            <span>Olá Mundo</span>
+        </Title>
     );
 }
 
