@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Pages
-import Main from "../Components/pages/Main";
-import Repositorio from "../Components/pages/Repositorio";
+import Main from "../pages/Main";
+import Repositorio from "../pages/Repositorio";
 
 const RoutesApp = () => {
     return(
