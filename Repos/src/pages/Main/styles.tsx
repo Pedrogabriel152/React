@@ -29,7 +29,20 @@ export const Form = styled.form`
         flex: 1;
         border: 1px solid #DDD;
         padding: 10px 15px;
+        border-radius: 6px;
+        font-size: 17px;
     }
 `;
 
-export const SubmitButton = styled.button``;
+export const SubmitButton = styled.button.attrs({
+    type: 'submit'
+})`
+    background: #0D2636;
+    border: 0;
+    border-radius: 4px;
+    margin-left: 10px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
