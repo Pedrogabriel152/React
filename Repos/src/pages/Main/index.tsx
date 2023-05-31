@@ -5,7 +5,8 @@ import api from '../../Services/apit';
 
 const Main = () => {
     const [newRepo, setNewRepo] = useState<string>('');
-    const [repositorios, setRepositorios] = useState<any>([]);
+    const [repositories, setRepositories] = useState<any>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNewRepo(e.target.value)
@@ -13,16 +14,19 @@ const Main = () => {
 
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
         
         api.get(`repos/${newRepo}`)
         .then(res => {
-            setRepositorios([...repositorios, res.data.full_name]);
+            setRepositories([...repositories, res.data.full_name]);
             setNewRepo('')
+            console.log(loading)
         })
-        .catch(error => console.log('Repositorio não encontrado'));
-        console.log(repositorios)
-        
-    }, [newRepo, repositorios])
+        .catch(error => console.log(error))
+        .finally(() => setLoading(false));
+        console.log(loading)
+
+    }, [newRepo, repositories])
 
     return(
         <Container>
@@ -35,7 +39,7 @@ const Main = () => {
                     value={newRepo}
                     onChange={handleInputChange}
                 />
-                <SubmitButton>
+                <SubmitButton loading={loading? 1:0}>
                     <FaPlus color='#fff' size={14}/>
                 </SubmitButton>
             </Form>
