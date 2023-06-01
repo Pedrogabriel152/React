@@ -1,9 +1,10 @@
 import React from "react";
 import bank_logo from "../../assets/images/bank_logo.svg";
+import { Cabecalho as Header} from "./styled";
 
 const Cabecalho = () => {
   return (
-    <div className="cabecalho">
+    <Header>
       <img className="imagem-logo" src={bank_logo} alt="Logo Smart Bank" />
       <div>
         <a className="btn-secundario" href="https://google.com">
@@ -13,7 +14,7 @@ const Cabecalho = () => {
           Sair
         </a>
       </div>
-    </div>
+    </Header>
   );
 };
 
