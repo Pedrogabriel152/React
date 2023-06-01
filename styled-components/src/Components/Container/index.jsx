@@ -3,6 +3,7 @@ import React from "react";
 import Titulo from "../Titulo";
 import Conta from "../Conta";
 import { StyledConatiner, Content } from "./styled";
+import Extrato from "../Extrato";
 
 const Container = () => {
   return (
@@ -10,6 +11,7 @@ const Container = () => {
       <Titulo>Olá Fulano!</Titulo>
       <Content>
         <Conta />
+        <Extrato />
       </Content>
     </StyledConatiner>
   );
