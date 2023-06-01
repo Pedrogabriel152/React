@@ -3,7 +3,7 @@ import { fundoClaro } from '../UI/variaveis';
 
 export const ItemStyled = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: column;s
 
     .text {
         font-weight: bold;

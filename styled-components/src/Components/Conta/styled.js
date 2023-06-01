@@ -9,6 +9,7 @@ export const ImagemIconeMargin = styled(ImagemIcone)`
 export const Saldo = styled.div`
     font-weight: 700;
     font-size: 32px;
+    color: ${({theme}) => theme.text};
 
     span {
         color: ${corPrimaria};

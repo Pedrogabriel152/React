@@ -8,5 +8,6 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         text-decoration: none;
         color: grey;
+        color: ${({theme}) => theme.text};
     }
 `;
