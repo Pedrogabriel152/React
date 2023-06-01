@@ -2,15 +2,16 @@ import React from "react";
 
 import Titulo from "../Titulo";
 import Conta from "../Conta";
+import { StyledConatiner, Content } from "./styled";
 
 const Container = () => {
   return (
-    <div className="container">
+    <StyledConatiner>
       <Titulo>Olá Fulano!</Titulo>
-      <section className="conteudo">
+      <Content>
         <Conta />
-      </section>
-    </div>
+      </Content>
+    </StyledConatiner>
   );
 };
 

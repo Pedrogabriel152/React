@@ -1,18 +1,18 @@
 import React from "react";
 import bank_logo from "../../assets/images/bank_logo.svg";
-import { Cabecalho as Header} from "./styled";
+import { Cabecalho as Header, ImagemLogo, BtnCabecalho} from "./styled";
 
 const Cabecalho = () => {
   return (
     <Header>
-      <img className="imagem-logo" src={bank_logo} alt="Logo Smart Bank" />
+      <ImagemLogo src={bank_logo} alt="Logo Smart Bank" />
       <div>
-        <a className="btn-secundario" href="https://google.com">
+        <BtnCabecalho primary href="https://google.com">
           Ajuda
-        </a>
-        <a className="btn-primario" href="https://google.com">
+        </BtnCabecalho>
+        <BtnCabecalho href="https://google.com">
           Sair
-        </a>
+        </BtnCabecalho>
       </div>
     </Header>
   );
