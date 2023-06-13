@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState, useEffect } from 'react';
 import { Container, Form, SubmitButton, List, DeleteButton } from './styles';
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 import api from '../../Services/apit';
@@ -7,21 +7,36 @@ const Main = () => {
     const [newRepo, setNewRepo] = useState<string>('');
     const [repositories, setRepositories] = useState<any>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [alert, setAlert] = useState<any>(null);
+    const [alert, setAlert] = useState<boolean>(false);
+
+    // Buscar
+    useEffect(() => {
+        const repoStorage = localStorage.getItem('repos');
+
+        if(repoStorage){
+            setRepositories(JSON.parse(repoStorage));
+        }
+    }, []);
+
+    // Salvar alterações
+    useEffect(() => {
+        localStorage.setItem('repos', JSON.stringify(repositories));
+    }, [repositories]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewRepo(e.target.value)
+        setNewRepo(e.target.value);
+        setAlert(false);
     }
 
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        setAlert(null);
+        setAlert(false);
 
         if(!newRepo){
             console.log('Você precisa indicar um repositório');
             setAlert(true);
-            setLoading(false)
+            setLoading(false);
             return;
         }
         
@@ -52,7 +67,7 @@ const Main = () => {
         <Container>
             <h1><FaGithub size={25}/>Meus Repositorios</h1>
 
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} error={alert}>
                 <input 
                     type="text" 
                     placeholder='Adicionar Repositorios'

@@ -1,8 +1,12 @@
 import styled, {keyframes, css} from 'styled-components';
 
-type PropTypeBg = {
+type IButton = {
     loading: number;
 };
+
+type IForm = {
+    error: boolean;
+}
 
 export const Container = styled.div`
     max-width: 700px;
@@ -24,14 +28,14 @@ export const Container = styled.div`
     }
 `;
 
-export const Form = styled.form`
+export const Form = styled.form<IForm>`
     margin-top: 30px;
     display: flex;
     flex-direction: row;
     
     input{
         flex: 1;
-        border: 1px solid #DDD;
+        border: 1px solid ${(props: IForm) => props.error? '#FF0000' : '#DDD'};
         padding: 10px 15px;
         border-radius: 6px;
         font-size: 17px;
@@ -60,7 +64,7 @@ export const DeleteButton = styled.button.attrs({
     border-radius: 4px;
 `;
 
-export const SubmitButton = styled.button.attrs((props: PropTypeBg) => ({
+export const SubmitButton = styled.button.attrs((props: IButton) => ({
     type: 'submit',
     disabled: props.loading
 }))`
