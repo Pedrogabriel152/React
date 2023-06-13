@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { Container, Form, SubmitButton } from './styles';
-import { FaGithub, FaPlus } from 'react-icons/fa';
+import { Container, Form, SubmitButton, List, DeleteButton } from './styles';
+import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 import api from '../../Services/apit';
 
 const Main = () => {
     const [newRepo, setNewRepo] = useState<string>('');
     const [repositories, setRepositories] = useState<any>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [alert, setAlert] = useState<any>(null);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNewRepo(e.target.value)
@@ -15,18 +16,37 @@ const Main = () => {
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
+        setAlert(null);
+
+        if(!newRepo){
+            console.log('Você precisa indicar um repositório');
+            setAlert(true);
+            setLoading(false)
+            return;
+        }
         
         api.get(`repos/${newRepo}`)
         .then(res => {
-            setRepositories([...repositories, res.data.full_name]);
+            const hasRepo = repositories.find((repo: any) => repo.full_name === newRepo);
+            
+            if(hasRepo){
+                throw new Error('Você precisa indicar um repositorio!');
+            }
+
+            setRepositories([...repositories, res.data]);
             setNewRepo('')
             console.log(loading)
         })
-        .catch(error => console.log(error))
+        .catch(error => setAlert(true))
         .finally(() => setLoading(false));
-        console.log(loading)
+        console.log(repositories)
 
-    }, [newRepo, repositories])
+    }, [newRepo, repositories]);
+
+    const handleDelete = useCallback((name: string) => {
+        const find = repositories.filter((r: any) => r.name !== name);
+        setRepositories(find);
+    },[repositories]);
 
     return(
         <Container>
@@ -39,10 +59,29 @@ const Main = () => {
                     value={newRepo}
                     onChange={handleInputChange}
                 />
-                <SubmitButton loading={loading? 1:0}>
-                    <FaPlus color='#fff' size={14}/>
+                <SubmitButton loading={loading ? 1:0} >
+                    {loading 
+                        ? <FaSpinner color='#FFF' size={14}/> 
+                        : <FaPlus color='#fff' size={14}/>
+                    }
                 </SubmitButton>
             </Form>
+
+            <List>
+                {repositories.map((repository: any) => (
+                    <li key={repository.id}>
+                        <span>
+                            <DeleteButton onClick={()=>handleDelete(repository.name)}>
+                                <FaTrash size={14}/>
+                            </DeleteButton>
+                            {repository.name}
+                        </span>
+                        <a href="">
+                            <FaBars size={20}/>
+                        </a>
+                    </li>
+                ))} 
+            </List>
         </Container>
     );
 }
