@@ -11,10 +11,14 @@ const Main = () => {
 
     // Buscar
     useEffect(() => {
-        const repoStorage = localStorage.getItem('repos');
+        console.log('Começou')
+        const repoStorage: any = localStorage.getItem('repos');
+        console.log(repoStorage)
+        console.log('Aquiiiiiiiiiiiiiiiiiiiiiiiiii')
 
         if(repoStorage){
             setRepositories(JSON.parse(repoStorage));
+            console.log(repositories);
         }
     }, []);
 
@@ -48,7 +52,11 @@ const Main = () => {
                 throw new Error('Você precisa indicar um repositorio!');
             }
 
-            setRepositories([...repositories, res.data]);
+            const data = {
+                name: res.data.full_name
+            }
+
+            setRepositories([...repositories, data]);
             setNewRepo('')
             console.log(loading)
         })
@@ -84,7 +92,7 @@ const Main = () => {
 
             <List>
                 {repositories.map((repository: any) => (
-                    <li key={repository.id}>
+                    <li key={repository.name}>
                         <span>
                             <DeleteButton onClick={()=>handleDelete(repository.name)}>
                                 <FaTrash size={14}/>
