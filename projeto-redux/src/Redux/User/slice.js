@@ -22,15 +22,39 @@ const logoutUserFunc = (state) => {
     }
 }
 
+const createAddress = (state, action) => {
+    if(!action.payload.location || !action.payload.number){
+        alert('PREENÇA TODOS OS CAMPOS');
+        return { ...state };
+    }
+
+    if(!state.user){
+        alert("Faça o login para cadastrar o endereço")
+        return { ...state };
+    }
+
+    return {
+        ...state,
+        user:{
+            ...state.user,
+            address:{
+                location: action.payload.location,
+                number: action.payload.number
+            }
+        }
+    }
+}
+
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
         createUser: createUserFunc,
         logoutUser: logoutUserFunc,
+        addAddress: createAddress
     }
 });
 
-export const { createUser, logoutUser } = userSlice.actions;
+export const { createUser, logoutUser, addAddress } = userSlice.actions;
 
 export default userSlice.reducer;
