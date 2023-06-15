@@ -11,6 +11,7 @@ export function Home() {
   function handleDeleteAddress(){
     dispatch(removeAddress());
     console.log(user)
+    alert("Deletado com sucesso"); 
   }
 
   return (
