@@ -2,13 +2,14 @@ import { useState } from 'react'
 import styles from './address.module.css'
 import { Header } from '../../components/header'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addAddress } from '../../Redux/User/slice';
 
 export function Address() {
   const dispatch = useDispatch();
   const [addressName, setAddressName] = useState("")
   const [addressNumber, setAddressNumber] = useState("")
+  const { user } = useSelector((rootReducer) => rootReducer.user);
 
 
   function handleRegisterAddress(){
@@ -37,14 +38,14 @@ export function Address() {
             type="text" 
             className={styles.input}
             placeholder="Ex: Rua centro, x"
-            value={addressName}
+            value={addressName? addressName : user? user?.address?.location : ''}
             onChange={ (e) => setAddressName(e.target.value) }
           />
           <input 
             type="text" 
             className={styles.input}
             placeholder="Numero"
-            value={addressNumber}
+            value={addressNumber? addressNumber : user? user?.address?.number : ''}
             onChange={ (e) => setAddressNumber(e.target.value) }
           />
 
