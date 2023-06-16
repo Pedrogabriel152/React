@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    user: null
+    user: null,
+    users: [], 
+    loading: false
 };
 
 const createUserFunc = (state, action) => {
@@ -60,6 +62,21 @@ const createAddress = (state, action) => {
     }
 }
 
+const sourceUsers = (state, action) => {
+    state.loading = true;
+}
+
+const sourceUsersSuccess = (state, action) => {
+    state.users = action.payload;
+    state.loading = false;
+}
+
+const sourceUsersFailed = (state, ation) => {
+    console.log("Deu erro")
+    console.log(ation.payload)
+    state.loading = false;
+}
+
 export const userSlice = createSlice({
     name: "user",
     initialState,
@@ -67,10 +84,13 @@ export const userSlice = createSlice({
         createUser: createUserFunc,
         logoutUser: logoutUserFunc,
         addAddress: createAddress,
-        removeAddress: deleteAddress
+        removeAddress: deleteAddress,
+        fetchUsers: sourceUsers,
+        fetchUsersSuccess: sourceUsersSuccess,
+        fetchUsersFailed: sourceUsersFailed
     }
 });
 
-export const { createUser, logoutUser, addAddress, removeAddress } = userSlice.actions;
+export const { createUser, logoutUser, addAddress, removeAddress, fetchUsers, fetchUsersSuccess, fetchUsersFailed } = userSlice.actions;
 
 export default userSlice.reducer;
